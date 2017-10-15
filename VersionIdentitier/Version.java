@@ -84,7 +84,8 @@ public class Version {
         return null;
     }
 
-
+    // Check input version is before than this version.
+    // If version is same, return false.
     public boolean isVersionAfterThan(Version v){
         if(getMajorVersion() > v.getMajorVersion())
             return true;
@@ -105,6 +106,8 @@ public class Version {
     }
 
 
+    // Check input version is after than this version.
+    // If version is same, return false.
     public boolean isVersionBeforeThan(Version v){
         if(getMajorVersion() < v.getMajorVersion())
             return true;
