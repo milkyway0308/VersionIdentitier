@@ -6,17 +6,17 @@ public class Version {
     public Version(int major, int minor, int maintenance, int build) {
         this.major = major;
         this.minor = minor;
-        this.maintenance = maintenance;
         this.build = build;
         sortData();
+        this.maintenance = getMaintenance(maintenance);
     }
 
 
     public Version(int major, int minor, int maintenance) {
         this.major = major;
         this.minor = minor;
-        this.maintenance = maintenance;
         sortData();
+        this.maintenance = getMaintenance(maintenance);
     }
 
 
@@ -50,7 +50,7 @@ public class Version {
     // 1 - Beta
     // 2 - Release Candidate / 발매 후보
     // 3 - Release / 발매
-    private int maintenance = 0;
+    private Maintenance maintenance = Maintenance.Alpha;
 
 
     private int build = 0;
@@ -70,7 +70,7 @@ public class Version {
         return build;
     }
 
-    public Maintenance getMaintenance(){
+    private Maintenance getMaintenance(int maintenance){
         switch (maintenance){
             case 0:
                 return Maintenance.Alpha;
@@ -81,50 +81,48 @@ public class Version {
             case 3:
                 return Maintenance.Release;
         }
-        return null;
+        return Maintenance.Alpha;
     }
 
-    // Check input version is before than this version.
-    // If version is same, return false.
-    public boolean isVersionAfterThan(Version v){
-        if(getMajorVersion() > v.getMajorVersion())
-            return true;
-        else if(getMajorVersion() >= v.getMajorVersion()){
-            if(getMinorVersion() > v.getMinorVersion())
-                return true;
-            else if(getMinorVersion() >= v.getMinorVersion()){
-                if(getMaintenance().getVer() > v.getMaintenance().getVer())
-                    return true;
-                else if(getMaintenance().getVer() >= v.getMaintenance().getVer()){
-                    return getBuild() > v.getBuild();
-                }else
-                    return false;
-            }else
-                return false;
-        }else
-            return false;
-    }
+  
+  // Fixed for more readability.
+  // Code edit by - Ranol
+  //
+  // Check input version is before than this version.
+  // If version is same, return false.
+  public boolean isVersionAfterThan(Version v){
+  	if(getMajorVersion() != v.getMajorVersion()) {
+  		return getMajorVersion() > v.getMajorVersion();
+  	}
+  	if(getMinorVersion() != v.getMinorVersion()) {
+  		return getMinorVersion() > v.getMinorVersion();
+  	}
+  	if(getMaintenance().getVer() != v.getMaintenance().getVer()) {
+  		return getMaintenance().getVer() > v.getMaintenance().getVer();
+  	}
+  	return getBuild() > v.getBuild();
+  }
 
-
-    // Check input version is after than this version.
-    // If version is same, return false.
-    public boolean isVersionBeforeThan(Version v){
-        if(getMajorVersion() < v.getMajorVersion())
-            return true;
-        else if(getMajorVersion() <= v.getMajorVersion()){
-            if(getMinorVersion() < v.getMinorVersion())
-                return true;
-            else if(getMinorVersion() <= v.getMinorVersion()){
-                if(getMaintenance().getVer() < v.getMaintenance().getVer())
-                    return true;
-                else if(getMaintenance().getVer() <= v.getMaintenance().getVer()){
-                    return getBuild() < v.getBuild();
-                }else
-                    return false;
-            }else
-                return false;
-        }else
-            return false;
-
-    }
+  // Fixed for more readability.
+  // Code edit by - Ranol
+  //
+  // Check input version is after than this version.
+  // If version is same, return false.
+  public boolean isVersionBeforeThan(Version v){
+  	if(getMajorVersion() != v.getMajorVersion()) {
+  		return getMajorVersion() < v.getMajorVersion();
+  	}
+  	if(getMinorVersion() != v.getMinorVersion()) {
+  		return getMinorVersion() < v.getMinorVersion();
+  	}
+  	if(getMaintenance().getVer() != v.getMaintenance().getVer()) {
+  		return getMaintenance().getVer() < v.getMaintenance().getVer();
+  	}
+  	return getMaintenance().getBuild() < v.getMaintenance().getBuild();
+  }
+    
+  // return version as normal version format.
+  public String toString(){
+      return String.valueOf(getMajor() + "." + getMinor() + "." + getMaintenance().getBuild() + "." + getBuild());
+  }
 }
