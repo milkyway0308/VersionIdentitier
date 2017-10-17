@@ -1,8 +1,8 @@
-package VersionIdentitier;
+ package VersionIdentitier;
 
 import VersionIdentitier.Enum.Maintenance;
 
-public class Version {
+public final class Version {
     public Version(int major, int minor, int maintenance, int build) {
         this.major = major;
         this.minor = minor;
