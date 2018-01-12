@@ -7,16 +7,16 @@ public final class Version {
         this.major = major;
         this.minor = minor;
         this.build = build;
-        sortData();
         this.maintenance = getMaintenanceByID(maintenance);
+        sortData();
     }
 
 
     public Version(int major, int minor, int maintenance) {
         this.major = major;
         this.minor = minor;
-        sortData();
         this.maintenance = getMaintenanceByID(maintenance);
+        sortData();
     }
 
 
